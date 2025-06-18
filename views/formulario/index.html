@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas de Seguridad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .custom-gradient {
+            background: linear-gradient(90deg, #001f94 0%, #fe6902 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navbar con gradiente personalizado -->
+    <nav class="custom-gradient text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-shield-alt text-2xl"></i>
+                <span class="text-xl font-bold">Seguridad Servitel</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="hover:text-blue-200 transition">Inicio</a>
+                <a href="#" class="hover:text-blue-200 transition">Ayuda</a>
+                <a href="#" class="hover:text-blue-200 transition">Contacto</a>
+            </div>
+            <button class="md:hidden focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+            <!-- Form Header -->
+            <div class="bg-blue-500 text-white px-6 py-4">
+                <h1 class="text-2xl font-bold">Configuración de Seguridad</h1>
+                <p class="text-blue-100">Por favor completa tus preguntas de seguridad para proteger tu cuenta</p>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="bg-gray-200 h-2">
+                <div class="bg-green-500 h-2 w-3/4"></div>
+            </div>
+            
+            <!-- Form Content -->
+            <form class="p-6 space-y-6" method="POST" action="?c=Registro&a=registrarUsuario">
+                <!-- User Information Section -->
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Información Personal</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre*</label>
+                            <input type="text" id="nombre" name="nombre" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="apellido" class="block text-sm font-medium text-gray-700 mb-1">Apellido*</label>
+                            <input type="text" id="apellido" name="apellido" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de Usuario*</label>
+                            <input type="text" id="username" name="username" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                            <input type="email" id="correo" name="correo"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Security Questions Section -->
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Preguntas de Seguridad</h2>
+                    <p class="text-sm text-gray-600 mb-6">Selecciona y responde 3 preguntas de seguridad que te ayudarán a recuperar tu cuenta en caso de necesidad.</p>
+                    
+                    <!-- Question 1 -->
+                    <div class="mb-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                        <label for="pregunta1" class="block text-sm font-medium text-gray-700 mb-2">Pregunta 1*</label>
+                        <select id="pregunta1" name="pregunta1" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mb-3">
+                            <option value="">Selecciona una pregunta</option>
+                            <option value="¿Cuál es el nombre de tu primera mascota?">¿Cuál es el nombre de tu primera mascota?</option>
+                            <option value="¿En qué ciudad naciste?">¿En qué ciudad naciste?</option>
+                            <option value="¿Cuál es el nombre de tu madre soltera?">¿Cuál es el nombre de tu madre soltera?</option>
+                            <option value="¿Cuál era tu comida favorita en la infancia?">¿Cuál era tu comida favorita en la infancia?</option>
+                            <option value="other">Otra pregunta (especificar)</option>
+                        </select>
+                        <div id="custom-question1-container" class="hidden mb-3">
+                            <label for="custom-question1" class="block text-sm font-medium text-gray-700 mb-1">Escribe tu pregunta personalizada</label>
+                            <input type="text" id="custom-question1" name="custom-question1"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <label for="respuesta1" class="block text-sm font-medium text-gray-700 mb-1">Respuesta*</label>
+                        <input type="text" id="respuesta1" name="respuesta1" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    
+                    <!-- Question 2 -->
+                    <div class="mb-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                        <label for="pregunta2" class="block text-sm font-medium text-gray-700 mb-2">Pregunta 2*</label>
+                        <select id="pregunta2" name="pregunta2" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mb-3">
+                            <option value="">Selecciona una pregunta</option>
+                            <option value="¿Cuál es el nombre de tu mejor amigo de la infancia?">¿Cuál es el nombre de tu mejor amigo de la infancia?</option>
+                            <option value="¿Cuál fue tu primer trabajo?">¿Cuál fue tu primer trabajo?</option>
+                            <option value="¿Cómo se llamaba tu colegio primario?">¿Cómo se llamaba tu colegio primario?</option>
+                            <option value="¿Cuál es tu película favorita?">¿Cuál es tu película favorita?</option>
+                            <option value="other">Otra pregunta (especificar)</option>
+                        </select>
+                        <div id="custom-question2-container" class="hidden mb-3">
+                            <label for="custom-question2" class="block text-sm font-medium text-gray-700 mb-1">Escribe tu pregunta personalizada</label>
+                            <input type="text" id="custom-question2" name="custom-question2"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <label for="respuesta2" class="block text-sm font-medium text-gray-700 mb-1">Respuesta*</label>
+                        <input type="text" id="respuesta2" name="respuesta2" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    
+                    <!-- Question 3 -->
+                    <div class="mb-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                        <label for="pregunta3" class="block text-sm font-medium text-gray-700 mb-2">Pregunta 3*</label>
+                        <select id="pregunta3" name="pregunta3" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mb-3">
+                            <option value="">Selecciona una pregunta</option>
+                            <option value="¿Cuál es tu libro favorito?">¿Cuál es tu libro favorito?</option>
+                            <option value="¿Qué deporte practicabas de niño?">¿Qué deporte practicabas de niño?</option>
+                            <option value="¿Cuál es el nombre de tu abuela materna?">¿Cuál es el nombre de tu abuela materna?</option>
+                            <option value="¿En qué año obtuviste tu primer empleo?">¿En qué año obtuviste tu primer empleo?</option>
+                            <option value="other">Otra pregunta (especificar)</option>
+                        </select>
+                        <div id="custom-question3-container" class="hidden mb-3">
+                            <label for="custom-question3" class="block text-sm font-medium text-gray-700 mb-1">Escribe tu pregunta personalizada</label>
+                            <input type="text" id="custom-question3" name="custom-question3"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <label for="respuesta3" class="block text-sm font-medium text-gray-700 mb-1">Respuesta*</label>
+                        <input type="text" id="respuesta3" name="respuesta3" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+                
+                <!-- Form Actions -->
+                <div class="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4">
+                    <button type="button" class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-6 py-2 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Guardar Configuración
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer con el mismo gradiente -->
+    <footer class="custom-gradient text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Seguridad Servitel</h3>
+                    <p class="text-blue-100">Protegiendo tus datos con las más avanzadas medidas de seguridad.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Enlaces</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">Inicio</a></li>
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">Política de Privacidad</a></li>
+                        <li><a href="#" class="text-blue-100 hover:text-white transition">Términos de Servicio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contacto</h3>
+                    <ul class="space-y-2">
+                        <li class="text-blue-100"><i class="fas fa-envelope mr-2"></i> soporte@servitel.co</li>
+                        <li class="text-blue-100"><i class="fas fa-phone mr-2"></i> +57 3178773186</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Síguenos</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-blue-100 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-blue-100 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-blue-100 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-blue-100 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-blue-400 mt-8 pt-6 text-center text-blue-100">
+                <p>© 2025 Seguridad Servitel. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mostrar campos de preguntas personalizadas cuando se selecciona "Otra pregunta"
+        document.querySelectorAll('select[id^="pregunta"]').forEach(select => {
+            select.addEventListener('change', function() {
+                const questionNumber = this.id.replace('pregunta', '');
+                const customContainer = document.getElementById(`custom-question${questionNumber}-container`);
+                
+                if (this.value === 'other') {
+                    customContainer.classList.remove('hidden');
+                } else {
+                    customContainer.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
