@@ -26,3 +26,11 @@ CREATE TABLE preguntas_seguridad (
     UNIQUE(usuario_id, numero_pregunta),
     UNIQUE(usuario_id, pregunta, pregunta_personalizada)
 );
+
+CREATE TABLE tabla_otps (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    otp VARCHAR(10) NOT NULL,
+    fecha_creacion DATETIME NOT NULL,
+    verificado TINYINT(1) DEFAULT 0
+);
