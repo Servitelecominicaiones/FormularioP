@@ -1,9 +1,6 @@
 <?php
 require_once "models/DataBase.php";
 
-
-
-
     if (!isset($_REQUEST['c'])) {
         require_once "controller/Menu.php";
         $controller = new Menu;
@@ -21,3 +18,5 @@ require_once "models/DataBase.php";
             echo "Error: Acción no válida.";
         }
     }
+
+?>
