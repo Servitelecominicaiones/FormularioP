@@ -1,0 +1,9 @@
+Iniciando validación para usuario: prueba.mesa1
+Respuesta del servidor: {"success":true,"message":"Usuario encontrado con Éxito"}
+
+Iniciando validación para usuario: prueba.mesa2
+Respuesta del servidor: {"success":true,"message":"Usuario encontrado con Éxito"}
+
+Iniciando validación para usuario: prueba.mesa1
+Respuesta del servidor: {"success":true,"message":"Usuario encontrado con Éxito"}
+

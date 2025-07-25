@@ -1,15 +1,15 @@
 <?php
     
-    class DataBase{       
+    class DataBase{
     
          public static function connection(){
             $config = [
-                'host' => '172.20.160.9', 
+                'host' => '172.20.160.9',
                 'port' => '3306',
-                'dbname' => 'automatizacion', 
+                'dbname' => 'automatizacion',
                 'charset' => 'utf8mb4',
-                'username' => 'user_automic', 
-                'password' => '4uT0m1c.Serv1t3l.D3v*' 
+                'username' => 'user_automic',
+                'password' => '4uT0m1c.Serv1t3l.D3v*'
             ];
             
             $options = [
@@ -27,4 +27,3 @@
             }
         }
     }
-?>

@@ -1,5 +1,4 @@
 <?php
-// require_once "models/users/db1.php";
 require_once "models/DataBase.php";
 
 
@@ -7,7 +6,7 @@ require_once "models/DataBase.php";
 
     if (!isset($_REQUEST['c'])) {
         require_once "controller/Menu.php";
-        $controller = new menu;
+        $controller = new Menu;
         $controller->main();
     } else {
         $controller = $_REQUEST['c'];
@@ -22,5 +21,3 @@ require_once "models/DataBase.php";
             echo "Error: Acción no válida.";
         }
     }
-    
-?>
