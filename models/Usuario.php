@@ -45,4 +45,3 @@ class Usuario {
         return $usuario_id;
     }
 }
-?>
