@@ -9,7 +9,8 @@ CREATE TABLE usuarios (
     apellido VARCHAR(100) NOT NULL,
     username VARCHAR(100) NOT NULL UNIQUE,
     telefono VARCHAR(20),
-    correo VARCHAR(150)
+    correo VARCHAR(150),
+    cedula VARCHAR(20) NOT NULL UNIQUE,
 );
 
 -- Crear tabla de preguntas de seguridad
