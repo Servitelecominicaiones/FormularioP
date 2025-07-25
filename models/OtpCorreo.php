@@ -8,7 +8,7 @@ class OtpCorreo {
     public static function generarOTP($email) {
         $otp = rand(100000, 999999);
         $fecha = date('Y-m-d H:i:s');
-        $db = DataBase::connection(); // ✅ CORRECTO
+        $db = Database::connection(); // ✅ CORRECTO
 
         // Eliminar OTPs anteriores
         $stmt = $db->prepare("DELETE FROM tabla_otps WHERE email = ?");
@@ -49,7 +49,7 @@ class OtpCorreo {
 
 
     public static function validarOTP($email, $otpIngresado) {
-        $db = DataBase::connection();
+        $db = Database::connection();
         $stmt = $db->prepare("SELECT * FROM tabla_otps WHERE email = ? AND otp = ? AND NOW() <= DATE_ADD(fecha_creacion, INTERVAL 10 MINUTE) AND verificado = 0");
         $stmt->execute([$email, $otpIngresado]);
 

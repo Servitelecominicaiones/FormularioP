@@ -1,6 +1,6 @@
 <?php
     
-    class DataBase{
+    class Database{
     
          public static function connection(){
             $config = [

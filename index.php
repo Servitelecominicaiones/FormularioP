@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once "models/DataBase.php";
+require_once "models/Database.php";
 
     if (!isset($_REQUEST['c'])) {
         require_once "controller/Menu.php";
