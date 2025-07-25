@@ -65,17 +65,39 @@
                             <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de Usuario*</label>
                             <input type="text" id="username" name="username" required
                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <span id="info-existente"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label for="cedula" class="block text-sm font-medium text-gray-700">Cédula</label>
+                            <input type="text" id="cedula" name="cedula" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm">
                         </div>
                         <div>
                             <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
                             <input type="tel" id="telefono" name="telefono"
                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
                         </div>
+                        <!-- CORREO Y BOTÓN PARA ENVIAR OTP -->
                         <div class="md:col-span-2">
-                            <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
-                            <input type="email" id="correo" name="correo"
-                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                            <input type="email" id="email" name="correo" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <button type="button" id="btnEnviarOTP" class="mt-2 px-4 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                Enviar OTP
+                            </button>
+                            <span id="correo-estado" class="text-sm text-green-600 hidden"></span>
                         </div>
+
+                        <!-- CÓDIGO OTP Y BOTÓN DE VALIDACIÓN -->
+                        <div class="md:col-span-2 mt-4" id="otpSection" style="display: none;">
+                            <label for="otp" class="block text-sm font-medium text-gray-700 mb-1">Código OTP</label>
+                            <input type="text" id="otp" name="otp"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <button type="button" id="btnValidarOTP" class="mt-2 px-4 py-1 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                Validar OTP
+                            </button>
+                            <span id="otp-error" class="text-sm text-red-600 hidden"></span>
+                        </div>
+
                     </div>
                 </div>
                 
@@ -156,7 +178,7 @@
                     <button type="button" class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         Cancelar
                     </button>
-                    <button type="submit" class="px-6 py-2 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="submit" disabled id="btn-guardar" class="px-6 py-2 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         Guardar Configuración
                     </button>
                 </div>
@@ -202,7 +224,9 @@
             </div>
         </div>
     </footer>
-
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/sweetalert2.js"></script>
+    <script src="assets/js/scripts.js"></script>
     <script>
         // Mostrar campos de preguntas personalizadas cuando se selecciona "Otra pregunta"
         document.querySelectorAll('select[id^="pregunta"]').forEach(select => {
@@ -218,5 +242,181 @@
             });
         });
     </script>
+    <script>
+        const usernameInput = document.getElementById('username');
+        const btnGuardar = document.getElementById('btn-guardar');
+        const errorSpan = document.createElement('span');
+        errorSpan.className = "text-sm text-red-600 mt-1 block hidden";
+        usernameInput.parentNode.appendChild(errorSpan);
+
+        let timer = null;
+
+        usernameInput.addEventListener('input', () => {
+            clearTimeout(timer);
+
+            timer = setTimeout(() => {
+                const username = usernameInput.value.trim();
+
+                if (username.length < 3) {
+                    mostrarError("El nombre de usuario debe tener al menos 3 caracteres.");
+                    return;
+                }
+
+                // Mostrar alerta de carga con SweetAlert
+                Swal.fire({
+                    title: 'Validando...',
+                    text: 'Espere un momento mientras se valida el usuario.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                const formData = new FormData();
+                formData.append('username', username);
+
+                fetch('?c=Validar&a=usuario', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        ocultarError();
+                        btnGuardar.disabled = false;
+                        usernameInput.dataset.valid = "true";
+
+                        const formDataBD = new FormData();
+                        formDataBD.append('username', username);
+
+                        fetch('?c=Registro&a=obtenerUsuario', {
+                            method: 'POST',
+                            body: formDataBD
+                        })
+                        .then(res => res.json())
+                        .then(info => {
+                            Swal.close(); // Cierra la alerta de carga
+
+                            if (info.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Usuario encontrado',
+                                    text: 'El usuario ha sido validado exitosamente.'
+                                });
+                                cargarFormulario(info.usuario, info.preguntas);
+                            } else {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Usuario no registrado',
+                                    text: 'El usuario no tiene información registrada.'
+                                });
+                            }
+                        });
+
+                    } else {
+                        Swal.close(); // Cierra la alerta de carga
+                        mostrarError("Usuario no válido o no encontrado.");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Usuario no válido',
+                            text: 'El usuario no existe en el directorio activo.'
+                        });
+                    }
+                })
+                .catch(() => {
+                    Swal.close();
+                    mostrarError("Error al validar el usuario.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error de conexión',
+                        text: 'No se pudo validar el usuario.'
+                    });
+                });
+
+            }, 1000);
+        });
+
+        function mostrarError(msg) {
+            errorSpan.textContent = msg;
+            errorSpan.classList.remove('hidden');
+            btnGuardar.disabled = true;
+            usernameInput.dataset.valid = "false";
+        }
+
+        function ocultarError() {
+            errorSpan.textContent = "";
+            errorSpan.classList.add('hidden');
+        }
+
+        const cedulaInput = document.getElementById('cedula');
+        const errorCedula = document.createElement('span');
+        errorCedula.className = "text-sm text-red-600 mt-1 block hidden";
+        cedulaInput.parentNode.appendChild(errorCedula);
+
+        let timerCedula = null;
+
+        cedulaInput.addEventListener('input', () => {
+            clearTimeout(timerCedula);
+
+            timerCedula = setTimeout(() => {
+                const cedula = cedulaInput.value.trim();
+
+                if (!/^\d{5,15}$/.test(cedula)) {
+                    mostrarErrorCedula("Debe ingresar una cédula válida.");
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Validando cédula...',
+                    text: 'Por favor espera un momento.',
+                    allowOutsideClick: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                const formData = new FormData();
+                formData.append('cedula', cedula);
+
+                fetch('?c=Validar&a=cedula', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    Swal.close();
+                    if (data.success) {
+                        ocultarErrorCedula();
+                        btnGuardar.disabled = false;
+                        cedulaInput.dataset.valid = "true";
+                        Swal.fire('Éxito', 'Cédula encontrada correctamente.', 'success');
+                    } else {
+                        mostrarErrorCedula("La cédula no está registrada.");
+                        Swal.fire('Error', 'La cédula no se encontró.', 'error');
+                    }
+                })
+                .catch(() => {
+                    Swal.close();
+                    mostrarErrorCedula("Error al validar la cédula.");
+                });
+
+            }, 1000);
+        });
+
+        function mostrarErrorCedula(msg) {
+            errorCedula.textContent = msg;
+            errorCedula.classList.remove('hidden');
+            btnGuardar.disabled = true;
+            cedulaInput.dataset.valid = "false";
+        }
+
+        function ocultarErrorCedula() {
+            errorCedula.textContent = "";
+            errorCedula.classList.add('hidden');
+        }
+
+
+    </script>
+
+    <span id="username-error" class="text-sm text-red-600 hidden"></span>
+
 </body>
 </html>
